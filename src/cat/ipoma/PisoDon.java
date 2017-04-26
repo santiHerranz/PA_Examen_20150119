@@ -38,9 +38,10 @@ public class PisoDon{
             // BUSQUEM REPE
             node aux=locals;
             while (aux!=null){ //esquema cerca
-                if (aux.inf.getIdentificador()!=p.getIdentificador())
+                if (aux.inf.getIdentificador() != p.getIdentificador())
                     aux=aux.seg;
-                else throw new Exception("Repe");
+                else
+                    throw new Exception("Repetit !");
             }
             //afegim al començament
             locals=new node(p,locals);
@@ -104,7 +105,7 @@ public class PisoDon{
         /* TODO sentències Exercici 6*/
 
         Pila aux = (PilaEnll)((PilaEnll)p).clone();
-        Pila resultat=new PilaEnll();
+        Pila resultat=new PilaEnll(10);
         while (!aux.pilaBuida()){
             int identificador= 0;
             try {
@@ -139,7 +140,8 @@ public class PisoDon{
     private static Immoble hiEs(int identificador, Acb arbre){
 //null si no hi és, sinó la referència a l’habitatge
 //l’arbre esta ordenat per identificador. Aprofitem l’ordenació per fer la cerca
-        if (!arbre.AcbBuit()) return ((AcbEnll)arbre).hiEs(identificador);
+        if (!arbre.AcbBuit())
+            return ((AcbEnll)arbre).hiEs(identificador);
         return null;
     }
 }
