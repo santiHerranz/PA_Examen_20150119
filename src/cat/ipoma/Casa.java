@@ -13,4 +13,13 @@ public class Casa extends Habitatge {
     }
     public int getNombrePlantes(){ return nombrePlantes;}
     public float getSuperficieJardi(){ return superficieJardi;}
+
+
+    @Override
+    public String toString() {
+        String s = "Casa\t ";
+        s += super.toString();
+        s += String.format("\tnombrePlantes: %d",nombrePlantes) ;
+        return s;
+    }
 }

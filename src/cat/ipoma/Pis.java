@@ -13,4 +13,13 @@ public class Pis extends Habitatge {
     }
     public int getNombreTerrases(){ return nombreTerrasses;}
     public boolean getTraster(){ return traster;}
+
+    @Override
+    public String toString() {
+        String s = "Pis\t ";
+        s += super.toString();
+        s += String.format("\tterrases: %d",nombreTerrasses) ;
+        s += String.format("\ttraster: %s",(traster?"SI":"NO")) ;
+        return s;
+    }
 }

@@ -31,6 +31,10 @@ public class Immoble implements Comparable {
     public int getSuperficie(){ return superficie;}
 
     public String toString() {
-        return String.valueOf(identificador) +" "+ superficie +" m2";
+        String s = "id: "+ String.valueOf(identificador);
+        s += String.format("\tsuperficie(m2): %d",superficie) ;
+        s += String.format("\tlloger: %.0f",preuLloguer) ;
+        s += String.format("\tvenda: %.0f",preuVenda) ;
+        return  s ;
     }
 }

@@ -1,14 +1,22 @@
 package cat.ipoma;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by santi on 26/04/2017.
  */
 public class PisoDon{
 
     private class node{
-        Immoble inf;node seg;
+        Immoble inf;
+        node seg;
         public node(Immoble p){this(p,null);}
-        public node(Immoble p, node s){this.inf=p;this.seg=s;}
+        public node(Immoble p, node s){
+            this.inf=p;
+            this.seg=s;
+        }
+
     }
     private node locals; //magatzem dels locals de la immobiliària. Seqüència enllaçada lineal sense node capçalera
     private Acb []habitatges; // taula de 2 arbres ACB, l’arbre de la posició d’índex 0
@@ -47,8 +55,11 @@ public class PisoDon{
             locals=new node(p,locals);
         }
         else{ //arbres, no és un local. Podrien afegir‐se als 2 arbres
-            if (p.getPreuLloguer()!=0) habitatges[1].Inserir(p);
-            if (p.getPreuVenda()!=0) habitatges[0].Inserir(p);
+            if (p.getPreuVenda()!=0)
+                habitatges[0].Inserir(p);
+
+            if (p.getPreuLloguer()!=0)
+                habitatges[1].Inserir(p);
         }
     }
 
@@ -60,23 +71,37 @@ public class PisoDon{
 
         if (p instanceof Local){
             //eliminar seq enllaçada, no té capçalera
-            if (locals==null ) throw new Exception("No hi es");
-            if (locals.inf.getIdentificador()==p.getIdentificador()) locals=locals.seg;
-            else{
-                boolean trobat=false; node aux=locals;
+            // cas 1: Sequencia buida
+            if (locals==null )
+                throw new Exception("No hi ha cap local");
+
+            // cas 2: Primera posicio sequencia
+            if (locals.inf.getIdentificador()==p.getIdentificador())
+                locals=locals.seg; // saltar node
+            // cas 3: altres posicions sequencia
+            else {
+                // cerca i esborra element de la llista
+                boolean trobat=false;
+                node aux=locals; // referencia al primer node -> mirem seguent
                 while (!trobat && aux.seg!=null){
                     if (aux.seg.inf.getIdentificador()!=p.getIdentificador())
                         aux=aux.seg;
-                    else trobat=true;
+                    else
+                        trobat=true;
                 }
                 if(!trobat)
                     throw new Exception("No hi es");
-                else aux.seg=aux.seg.seg;
+                else
+                    aux.seg=aux.seg.seg; // saltar node
             }
         }
-        else{ //arbres
-            if (p.getPreuLloguer()!=0) habitatges[1].Esborrar(p);
-            if (p.getPreuVenda()!=0) habitatges[0].Esborrar(p);
+        else {
+            // p instanceof Habitatge
+            //  Esborrar a l arbre corresponent,
+            if (p.getPreuLloguer()!=0)
+                habitatges[1].Esborrar(p);
+            if (p.getPreuVenda()!=0)
+                habitatges[0].Esborrar(p);
         }
     }
 
@@ -86,21 +111,28 @@ public class PisoDon{
         * de venda comprès entre ambdós preus especificats en els paràmetres del mètode.
         * Llançarà una excepció si no hi ha cap casa que compleixi el requeriment de preu.*/
         // Cerca arbre ACB pos 0
-        Casa m=null;
+        Casa m = null;
         if (!habitatges[0].AcbBuit())
             m=((AcbEnll)habitatges[0]).hihaCasa(preuMinimVenda, preuMaximVenda);
-        if (m==null) throw new Exception("Cap !!!"); else return m;
+        if (m==null)
+            throw new Exception("Cap !!!"); else return m;
     }
 
     public Cua quinsHabitatges() {
-        /* TODO sentències Exercici 5*/
-
+        /* TODO sentències Exercici 5 (2 Punts)
+        * ha de retornar dins d’una Cua els objectes Habitatges que estan a la immobiliària
+        * tant per a la venda com pel lloguer. Si no hi ha cap, la cua es retornarà buida.
+        * */
         Cua c=new CuaEnll();
         //recorregut arbre ACB pos 0
         if (!habitatges[0].AcbBuit()) //han d’estar als dos
             ((AcbEnll)habitatges[0]).quinsHabitatges(c);
         return c;
     }
+
+
+
+
     public Pila obtenirDadesImmobles(Pila p){
         /* TODO sentències Exercici 6*/
 
@@ -144,4 +176,35 @@ public class PisoDon{
             return ((AcbEnll)arbre).hiEs(identificador);
         return null;
     }
+
+
+
+    // EXTRA
+    @Override
+    public String toString() {
+        String s = "DonPiso\n";
+        s += "\nLocals\n"+ llistar(locals);
+        s += "\nVenda\n"+ llistar(habitatges[0]);
+        s += "\nLloger\n"+ llistar(habitatges[1]);
+        return s;
+    }
+
+    private static String llistar(node locals){
+        String s = "";
+        node aux=locals;
+        while (aux!=null) {
+            s += ((Local)aux.inf).toString() +"\n";
+            aux=aux.seg;
+        }
+        return s;
+    }
+
+    private static String llistar(Acb habitatges){
+        String s = "";
+        for (Immoble item: ((AcbEnll)habitatges).llistar())
+            s += item.toString() +"\n";
+        return s;
+    }
+
+
 }

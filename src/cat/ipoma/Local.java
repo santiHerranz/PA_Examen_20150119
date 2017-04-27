@@ -11,4 +11,16 @@ public class Local extends Immoble {
     }
     public boolean getLavabo(){ return lavabo;}
     public String getTipusNegoci(){ return tipusNegoci;}
+
+
+
+    @Override
+    public String toString() {
+        String s = "Local\t ";
+        s += super.toString();
+        s += String.format("\ttipusNegoci: %s",tipusNegoci) ;
+        s += String.format("\tlavabo: %s",(lavabo?"SI":"NO")) ;
+        return s;
+    }
 }
+
