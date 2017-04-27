@@ -1,8 +1,5 @@
 package cat.ipoma;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by santi on 26/04/2017.
  */
@@ -103,6 +100,25 @@ public class PisoDon{
             if (p.getPreuVenda()!=0)
                 habitatges[0].Esborrar(p);
         }
+    }
+
+
+    public void EliminarLocalsCars(float preu){
+
+        if (locals== null) return;
+
+        node aux=locals; // referencia al primer node -> mirem seguent
+        while (aux.seg!=null){
+            if (aux.seg.inf.getPreuVenda()>preu)
+                aux.seg=aux.seg.seg; // saltar node
+            else
+                aux = aux.seg;
+        }
+
+        // primer cas
+        if (locals.inf.getPreuVenda()>preu)
+            locals = locals.seg;
+
     }
 
     public Casa hihaCasa(float preuMinimVenda, float preuMaximVenda) throws Exception{

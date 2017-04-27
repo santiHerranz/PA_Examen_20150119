@@ -16,16 +16,16 @@ public class Main {
         Pis p3 = new Pis(2,1,1,70,90000,300,true,1);
         Pis p4 = new Pis(2,1,1,70,90000,270,false,0);
 
-        Local l1 = new Local("Botiga1", 200, 50000, 400, true);
-        Local l2 = new Local("Botiga2", 200, 50000, 400, true);
-        Local l3 = new Local("Botiga3", 200, 50000, 400, true);
-        Local l4 = new Local("Botiga4", 200, 50000, 400, true);
-        Local l5 = new Local("Botiga5", 200, 50000, 400, true);
-        Local l6 = new Local("Botiga6", 200, 50000, 400, true);
+        Local l1 = new Local("Botiga1", 200, 10000, 400, true);
+        Local l2 = new Local("Botiga2", 200, 12000, 400, true);
+        Local l3 = new Local("Botiga3", 200, 14000, 400, true);
+        Local l4 = new Local("Botiga4", 200, 16000, 400, true);
+        Local l5 = new Local("Botiga5", 200, 18000, 400, true);
+        Local l6 = new Local("Botiga6", 200, 20000, 400, true);
 
 
         try {
-
+/*
             dp.afegirImmoble(p1);
             dp.afegirImmoble(p2);
             dp.afegirImmoble(p3);
@@ -34,6 +34,7 @@ public class Main {
             dp.afegirImmoble(h1);
             dp.afegirImmoble(h2);
             dp.afegirImmoble(h3);
+*/
 
             dp.afegirImmoble(l1);
             dp.afegirImmoble(l2);
@@ -41,11 +42,11 @@ public class Main {
             dp.afegirImmoble(l4);
             dp.afegirImmoble(l5);
             dp.afegirImmoble(l6);
-/**/
+
+            //dp.eliminarImmoble(l4);
 
 
-
-            dp.eliminarImmoble(l4);
+            dp.EliminarLocalsCars(15000);
 
             System.out.print(dp.toString());
 
